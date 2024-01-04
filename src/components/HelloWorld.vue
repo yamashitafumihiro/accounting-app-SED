@@ -33,8 +33,9 @@
       <div class="drink-list">
         <h3>飲料一覧</h3>
         <ul>
-          <li v-for="drink in drinks" :key="drink.name">
+          <li v-for="(drink, index) in drinks" :key="drink.name">
             {{ drink.name }} - ¥{{ drink.price }}
+            <button @click="removeDrink(index)">削除</button>
           </li>
         </ul>
       </div>
@@ -94,6 +95,9 @@ export default {
         this.newDrink.name = '';
         this.newDrink.price = 0;
       }
+    },
+    removeDrink(index) {
+      this.drinks.splice(index, 1);
     }
   }
 }
