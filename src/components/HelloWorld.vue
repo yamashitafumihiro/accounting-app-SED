@@ -147,20 +147,17 @@ export default {
       let drinkCosts = {};
       for (const participant in this.consumptionRecords) {
         const drinks = this.consumptionRecords[participant];
-        for (const drink in drinks) {
-          const amount = drinks[drink];
-          const drinkPrice = this.drinks.find(d => d.name === drink)?.price || 0;
-          if (!drinkCosts[participant]) {
-            drinkCosts[participant] = 0;
-          }
-          drinkCosts[participant] += drinkPrice * amount;
-        }
+        drinkCosts[participant] = Object.keys(drinks).reduce((totalCost, drinkName) => {
+          const drink = this.drinks.find(d => d.name === drinkName);
+          const drinkPrice = drink ? drink.price : 0;
+          const amount = drinks[drinkName];
+          return totalCost + drinkPrice * amount;
+        }, 0);
       }
 
-      // 食べ物のコストを均等に分割
-      const foodCostPerPerson = (this.totalBillAmount - Object.values(drinkCosts).reduce((sum, cost) => sum + cost, 0)) / this.participants.length;
+      const totalDrinkCosts = Object.values(drinkCosts).reduce((sum, cost) => sum + cost, 0);
+      const foodCostPerPerson = (this.totalBillAmount - totalDrinkCosts) / this.participants.length;
 
-      // 各参加者の支払い額を計算（飲料代 + 食べ物の均等割）
       this.paymentResults = this.participants.map(participant => ({
         participant,
         payment: Math.ceil((drinkCosts[participant] || 0) + foodCostPerPerson)
