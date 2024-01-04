@@ -2,7 +2,6 @@
     <nav class="navigation-bar">
       <ul>
         <li><router-link to="/">ホーム</router-link></li>
-        <li><router-link to="/about">アバウト</router-link></li>
       </ul>
     </nav>
   </template>
@@ -14,14 +13,20 @@
   </script>
   
   <style>
-  .navigation-bar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .navigation-bar li {
-    display: inline;
-    margin-right: 20px;
-  }
+  .nav-bar {
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+}
+
+.nav-bar a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-bar a.router-link-exact-active {
+  color: #000;
+  text-decoration: underline;
+}
   </style>
   

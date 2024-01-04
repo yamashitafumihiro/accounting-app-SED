@@ -1,22 +1,28 @@
 <template>
-  <div>
+   <div class="hello-world">
     <NavigationBar />
-    <h1>ホームページ</h1>
-    <p>ここはホームページです。</p>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
-import NavigationBar from '@/components/NavigationBar.vue';
+import NavigationBar from './NavigationBar.vue'
 
 export default {
   name: 'HelloWorld',
   components: {
     NavigationBar
+  },
+  data() {
+    return {
+      msg: '割り勘アプリへようこそ!'
+    }
   }
 };
 </script>
 
 <style>
-/* ここにスタイルを追加 */
+.hello-world {
+  padding: 20px;
+}
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <HelloWorld />
+  </div>
 </template>
 
 <script>
@@ -8,7 +10,7 @@ import HelloWorld from './components/HelloWorld.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld // ここでHelloWorldを登録します
   }
 }
 </script>
