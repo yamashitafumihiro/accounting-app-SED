@@ -25,18 +25,9 @@
     <section>
       <h2>飲料の追加</h2>
       <div class="input-group">
-        <input type="text" placeholder="飲料名を入力" v-model="newDrink.name" />
-        <input type="number" placeholder="価格を入力" v-model.number="newDrink.price" />
-        <button @click="addDrink">飲料を追加</button>
-      </div>
-      <!-- 飲料一覧の表示エリア -->
-      <div class="drink-list">
-        <h3>飲料一覧</h3>
-        <ul>
-          <li v-for="drink in drinks" :key="drink.name">
-            {{ drink.name }} - ¥{{ drink.price }}
-          </li>
-        </ul>
+        <input type="text" placeholder="飲料名を入力" />
+        <input type="number" placeholder="価格を入力" />
+        <button>飲料を追加</button>
       </div>
     </section>
 
@@ -68,16 +59,12 @@ export default {
   data() {
     return {
       newParticipantName: '', // 新しい参加者名の入力用
-      participants: [], // 参加者リスト
-      newDrink: { // 新しい飲料の情報
-        name: '',
-        price: ''
-      },
-      drinks: [] // 飲料リスト
+      participants: [] // 参加者リスト
     };
   },
   methods: {
     // 参加者を追加するメソッド
+    // TODO: 実際のロジックを後で追加する
     addParticipant() {
       if (this.newParticipantName) {
         this.participants.push(this.newParticipantName);
@@ -86,14 +73,6 @@ export default {
     },
     removeParticipant(index) {
       this.participants.splice(index, 1);
-    },
-     // 飲料を追加するメソッド
-    addDrink() {
-      if (this.newDrink.name && this.newDrink.price > 0) {
-        this.drinks.push({ ...this.newDrink });
-        this.newDrink.name = '';
-        this.newDrink.price = 0;
-      }
     }
   }
 }
@@ -120,8 +99,7 @@ export default {
   margin-right: .5rem;
 }
 
-.participant-list,
-.drink-list {
+.participant-list {
   margin-top: 1rem;
   background-color: #f7f7f7;
   border: 1px solid #ddd;
