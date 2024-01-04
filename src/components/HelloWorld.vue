@@ -6,13 +6,15 @@
     <section>
       <h2>参加者の追加</h2>
       <div class="input-group">
-        <input type="text" placeholder="参加者氏名を入力" />
-        <button>参加者を追加</button>
+        <input type="text" placeholder="参加者氏名を入力" v-model="newParticipantName" />
+        <button @click="addParticipant">参加者を追加</button>
       </div>
       <!-- 参加者一覧の表示エリア -->
       <div class="participant-list">
         <h3>参加者一覧</h3>
-        <!-- ここに参加者一覧が表示される -->
+        <ul>
+          <li v-for="participant in participants" :key="participant">{{ participant }}</li>
+        </ul>
       </div>
     </section>
 
@@ -53,16 +55,19 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      participants: [], // 参加者のデータを保持する配列
+      newParticipantName: '', // 新しい参加者名の入力用
+      participants: [] // 参加者リスト
     };
   },
   methods: {
     // 参加者を追加するメソッド
     // TODO: 実際のロジックを後で追加する
     addParticipant() {
-      // 仮の参加者を追加
-      this.participants.push({ name: '新しい参加者' });
-    },
+      if (this.newParticipantName) {
+        this.participants.push(this.newParticipantName);
+        this.newParticipantName = ''; // 入力フィールドをクリア
+      }
+    }
   },
 }
 </script>
