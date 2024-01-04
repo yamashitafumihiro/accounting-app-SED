@@ -82,11 +82,11 @@
       <h2>計算結果</h2>
       <button @click="calculateEqualPayment">均等割り勘</button>
       <button @click="calculateIndividualPayment">個別割り勘</button>
-      <ul>
+      <ul v-if="showResults">
         <li v-for="result in paymentResults" :key="result.participant">
           {{ result.participant }}: ¥{{ result.payment }}
         </li>
-      </ul>
+    </ul>
     </section>
   </div>
 </template>
@@ -107,6 +107,7 @@ export default {
       selectedDrink: '',
       drinkAmount: '',
       totalBillAmount: '',
+      showResults: false, // 計算結果の表示制御フラグ
       consumptionRecords: {},
       paymentResults: []
     };
@@ -171,9 +172,11 @@ export default {
         participant,
         payment: totalCostPerPerson
       }));
+      this.showResults = true;
     },
     calculateIndividualPayment() {
       this.calculatePayments();
+      this.showResults = true;
     }
   }
 }
