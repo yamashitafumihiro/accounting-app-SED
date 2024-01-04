@@ -49,6 +49,10 @@
           <option disabled value="">参加者を選択</option>
           <option v-for="participant in participants" :key="participant" :value="participant">{{ participant }}</option>
         </select>
+        <select v-model="selectedDrink">
+          <option disabled value="">飲料を選択</option>
+          <option v-for="drink in drinks" :key="drink.name" :value="drink.name">{{ drink.name }}</option>
+        </select>
         <input type="number" placeholder="消費量を入力(杯)" v-model.number="drinkAmount" />
         <button @click="calculateConsumption">計算を追加</button>
       </div>
@@ -80,6 +84,7 @@ export default {
       },
       drinks: [], // 飲料リスト
       selectedParticipant: '', // 選択された参加者
+      selectedDrink: '', // 選択された飲料
       drinkAmount: '', // 飲料の消費量
       consumptionResults: [] // 消費量計算結果のリスト
     };
