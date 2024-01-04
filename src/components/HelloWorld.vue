@@ -13,7 +13,10 @@
       <div class="participant-list">
         <h3>参加者一覧</h3>
         <ul>
-          <li v-for="participant in participants" :key="participant">{{ participant }}</li>
+          <li v-for="(participant, index) in participants" :key="participant">
+            {{ participant }}
+            <button @click="removeParticipant(index)">削除</button>
+          </li>
         </ul>
       </div>
     </section>
@@ -65,10 +68,13 @@ export default {
     addParticipant() {
       if (this.newParticipantName) {
         this.participants.push(this.newParticipantName);
-        this.newParticipantName = ''; // 入力フィールドをクリア
+        this.newParticipantName = '';
       }
+    },
+    removeParticipant(index) {
+      this.participants.splice(index, 1);
     }
-  },
+  }
 }
 </script>
 
