@@ -80,6 +80,8 @@
     <!-- 計算結果の表示セクション -->
     <section class="results">
       <h2>計算結果</h2>
+      <button @click="calculateEqualPayment">均等割り勘</button>
+      <button @click="calculateIndividualPayment">個別割り勘</button>
       <ul>
         <li v-for="result in paymentResults" :key="result.participant">
           {{ result.participant }}: ¥{{ result.payment }}
@@ -142,7 +144,6 @@ export default {
     },
     calculatePayments() {
       let drinkCosts = {};
-      let totalDrinkCost = 0;
       for (const participant in this.consumptionRecords) {
         const drinks = this.consumptionRecords[participant];
         for (const drink in drinks) {
@@ -152,19 +153,32 @@ export default {
             drinkCosts[participant] = 0;
           }
           drinkCosts[participant] += drinkPrice * amount;
-          totalDrinkCost += drinkPrice * amount;
         }
       }
-      const foodCost = this.totalBillAmount - totalDrinkCost;
-      const foodCostPerPerson = foodCost / this.participants.length;
+
+      // 食べ物のコストを均等に分割
+      const foodCostPerPerson = (this.totalBillAmount - Object.values(drinkCosts).reduce((sum, cost) => sum + cost, 0)) / this.participants.length;
+
+      // 各参加者の支払い額を計算（飲料代 + 食べ物の均等割）
       this.paymentResults = this.participants.map(participant => ({
         participant,
         payment: (drinkCosts[participant] || 0) + foodCostPerPerson
       }));
+    },
+    calculateEqualPayment() {
+      const totalCostPerPerson = this.totalBillAmount / this.participants.length;
+      this.paymentResults = this.participants.map(participant => ({
+        participant,
+        payment: totalCostPerPerson
+      }));
+    },
+    calculateIndividualPayment() {
+      this.calculatePayments();
     }
   }
 }
 </script>
+
 
 <style>
 .home-container {
