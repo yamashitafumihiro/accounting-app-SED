@@ -107,7 +107,7 @@ export default {
       selectedDrink: '',
       drinkAmount: '',
       totalBillAmount: '',
-      showResults: false, // 計算結果の表示制御フラグ
+      showResults: false,
       consumptionRecords: {},
       paymentResults: []
     };
