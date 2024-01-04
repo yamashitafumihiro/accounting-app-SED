@@ -45,19 +45,23 @@
     <section>
       <h2>飲料消費量の計算</h2>
       <div class="input-group">
-        <select>
-          <option selected>参加者を選択</option>
-          <!-- 参加者のリストがここに入る -->
+        <select v-model="selectedParticipant">
+          <option disabled value="">参加者を選択</option>
+          <option v-for="participant in participants" :key="participant" :value="participant">{{ participant }}</option>
         </select>
-        <input type="number" placeholder="消費量を入力(杯)" />
-        <button>計算を追加</button>
+        <input type="number" placeholder="消費量を入力(杯)" v-model.number="drinkAmount" />
+        <button @click="calculateConsumption">計算を追加</button>
       </div>
     </section>
 
     <!-- 計算結果の表示セクション -->
     <section class="results">
       <h2>計算結果</h2>
-      <!-- 計算結果のリストがここに入る -->
+      <ul>
+        <li v-for="result in consumptionResults" :key="result.participant">
+          {{ result.participant }}: {{ result.amount }} 杯
+        </li>
+      </ul>
     </section>
 
   </div>
@@ -74,7 +78,10 @@ export default {
         name: '',
         price: ''
       },
-      drinks: [] // 飲料リスト
+      drinks: [], // 飲料リスト
+      selectedParticipant: '', // 選択された参加者
+      drinkAmount: '', // 飲料の消費量
+      consumptionResults: [] // 消費量計算結果のリスト
     };
   },
   methods: {
@@ -96,8 +103,18 @@ export default {
         this.newDrink.price = 0;
       }
     },
-    removeDrink(index) {
-      this.drinks.splice(index, 1);
+    // 飲料消費量を計算するメソッド
+    calculateConsumption() {
+      if (this.selectedParticipant && this.drinkAmount > 0) {
+        const result = {
+          participant: this.selectedParticipant,
+          amount: this.drinkAmount
+        };
+        this.consumptionResults.push(result);
+        // フォームをリセット
+        this.selectedParticipant = '';
+        this.drinkAmount = 0;
+      }
     }
   }
 }
