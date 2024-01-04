@@ -125,7 +125,7 @@ export default {
     addDrink() {
       if (this.newDrink.name && this.newDrink.price > 0 && !this.drinks.some(d => d.name === this.newDrink.name)) {
         this.drinks.push({ ...this.newDrink });
-        this.newDrink = { name: '', price: 0 };
+        this.newDrink = { name: '', price: '' };
       }
     },
     removeDrink(drinkName) {
@@ -163,11 +163,12 @@ export default {
       // 各参加者の支払い額を計算（飲料代 + 食べ物の均等割）
       this.paymentResults = this.participants.map(participant => ({
         participant,
-        payment: (drinkCosts[participant] || 0) + foodCostPerPerson
+        payment: Math.ceil((drinkCosts[participant] || 0) + foodCostPerPerson)
       }));
+      this.showResults = true;
     },
     calculateEqualPayment() {
-      const totalCostPerPerson = this.totalBillAmount / this.participants.length;
+      const totalCostPerPerson = Math.ceil(this.totalBillAmount / this.participants.length);
       this.paymentResults = this.participants.map(participant => ({
         participant,
         payment: totalCostPerPerson
